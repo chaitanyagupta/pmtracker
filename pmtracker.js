@@ -131,7 +131,8 @@ var initmap = function () {
     resolvePlace(ps, activity.location, function (error, place) {
         let map = new google.maps.Map(mapElement, {
             center: place.geometry.location,
-            zoom: 8
+            zoom: 8,
+            fullscreenControl: false
         });
         let marker = new google.maps.Marker({
             position: place.geometry.location,
@@ -144,9 +145,11 @@ var initmap = function () {
             content: infoContainer
         });
         infoWindow.open(map, marker);
+        let tpControlsDiv = document.getElementById('time-period-controls');
+        tpControlsDiv.hidden = false;
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(tpControlsDiv);
         let footerDiv = document.getElementById('footer');
         footerDiv.hidden = false;
-        footerDiv.index = 1;
         map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(footerDiv);
     });
 };

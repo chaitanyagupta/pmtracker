@@ -6,12 +6,18 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="pmtracker.css">
     <script>
-      let activity = {
+      var activities = [{
         date: '2018-12-16',
         location: 'Prayagraj, UP, India',
         description: 'Some random thing that Modi had to do here',
         ref: { source: 'NDTV', url: 'http://example.com' }
-      };
+      }, {
+        date: '2018-12-17',
+        location: 'Delhi, India',
+        description: 'Some other random thing that Modi had to do here',
+        ref: { source: 'NDTV', url: 'http://example.com' }
+      }];
+      var activity = activities[0];
     </script>
   </head>
   <body>
@@ -28,7 +34,21 @@
         </div>
       </div>
     </div>
-    <div id="footer" hidden>
+    <div id="time-period-controls" hidden>
+      <div>
+        <label>
+          <input type="radio" id="period-today" name="period" value="today" checked>
+          <span>Today</span>
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="radio" id="period-week" name="period" value="week">
+          <span>Last 7 days</span>
+        </label>
+      </div>
+    </div>
+    <div id="footer">
       Created by <a href="https://chaitanyagupta.com">Chaitanya Gupta</a> <a href="https://twitter.com/chaitanya_gupta"><img class="footer-logo" src="twitter-brands.svg"></a>
     </div>
     <script src="pmtracker.js"></script>

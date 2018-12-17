@@ -44,14 +44,22 @@ html, body {
     max-height: 100px;
 }
 
+/* Time period controls */
+#time-period-controls {
+    font-size: 1.25em;
+    margin: 10px;
+    background: white;
+    border: 1px solid lightgray;
+    padding: 0.25em;
+}
+
 /* Footer */
 #footer {
-    border-width: 1px 1px 0 1px;
-    border-style: solid;
-    border-color: lightgray;
+    border: 1px solid lightgray;
     background: white;
     padding: 0.25em;
     font-size: 1.25em;
+    margin: 15px;
 }
 
 .footer-logo-container {
