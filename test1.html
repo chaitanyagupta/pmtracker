@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
+    <title>PM Modi Tracker</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="pmtracker.css">
     <script>
       let locationInfo = {
-        date: '2018-12-17',
-        name: 'New Delhi, India',
-        activity: 'Some random thing that Modi had to do here',
-        ref: { source: 'NDTV', url: 'http://example.com' }
-};
+      date: '2018-12-16',
+      name: 'Agra, UP, India',
+      activity: 'Some random thing that Modi had to do here',
+      ref: { source: 'NDTV', url: 'http://example.com' }
+      };
     </script>
   </head>
   <body>
     <div id="map"></div>
     <div id="info-content" hidden>
-      <div><time class="info-date"></time></div>
-      <div class="info-location-name"></div>
-      <div class="info-activity"></div>
       <div>
-        Source: <a class="info-ref"></a>
+        <div class="info-headline">Where is PM Modi?</div>
+        <div class="info-photo-container" hidden><img class="info-photo"></div>
+        <div><time class="info-date"></time></div>
+        <div class="info-location-name"></div>
+        <div class="info-activity"></div>
+        <div>
+          Source: <a class="info-ref"></a>
+        </div>
       </div>
     </div>
+    <div id="footer" hidden>
+      Created by <a href="https://chaitanyagupta.com">Chaitanya Gupta</a> <a href="https://twitter.com/chaitanya_gupta"><img class="footer-logo" src="twitter-brands.svg"></a>
+    </div>
     <script src="pmtracker.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxxmf1EGaVzxC_AZPkN0Mg_2vWRyJybtM&callback=initmap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxxmf1EGaVzxC_AZPkN0Mg_2vWRyJybtM&libraries=places&callback=initmap" async defer></script>
   </body>
 </html>

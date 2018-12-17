@@ -21,10 +21,44 @@ html, body {
 }
 
 /* Info window */
+.info-headline {
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 0.5em;
+}
+
 .info-location-name {
     font-weight: bold;
 }
 
 .info-activity {
     padding-top: 1em;
+}
+
+.info-photo-container {
+    float: right;
+}
+
+.info-photo {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+/* Footer */
+#footer {
+    border-width: 1px 1px 0 1px;
+    border-style: solid;
+    border-color: lightgray;
+    background: white;
+    padding: 0.25em;
+    font-size: 1.25em;
+}
+
+.footer-logo-container {
+    color: #1DA1F2;
+}
+
+.footer-logo {
+    height: 1em;
+    vertical-align: bottom;
 }
