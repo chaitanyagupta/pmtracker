@@ -71,7 +71,7 @@ let resolveLocale = function () {
     return DEFAULT_LOCALE;
 };
 
-let fillInfoContainer = function (container, locationInfo, place) {
+let fillInfoContainer = function (container, activity, place) {
     let locale = resolveLocale();
     // image
     if (place.photos && place.photos.length > 0) {
@@ -81,9 +81,9 @@ let fillInfoContainer = function (container, locationInfo, place) {
         img.src = photo.getUrl({ maxWidth: 100, maxHeight: 100 });
     }
     // date
-    let date = new Date(locationInfo.date);
+    let date = new Date(activity.date);
     let dateElement = container.querySelector('.info-date');
-    dateElement.dateTime = locationInfo.date;
+    dateElement.dateTime = activity.date;
     dateElement.textContent = date.toLocaleString(locale, {
         weekday: 'long',
         year: 'numeric',
@@ -92,11 +92,11 @@ let fillInfoContainer = function (container, locationInfo, place) {
         timeZone: DEFAULT_TIMEZONE
     });
     // location name
-    container.querySelector('.info-location-name').textContent = locationInfo.name;
+    container.querySelector('.info-location-name').textContent = activity.location;
     // activity
-    container.querySelector('.info-activity').textContent = locationInfo.activity;
+    container.querySelector('.info-activity').textContent = activity.description;
     // ref
-    let ref = locationInfo.ref;
+    let ref = activity.ref;
     let refAnchor = container.querySelector('.info-ref');
     refAnchor.href = ref.url;
     refAnchor.textContent = ref.source;
@@ -128,7 +128,7 @@ var initmap = function () {
     }
     let mapElement = document.getElementById('map');
     let ps = new google.maps.places.PlacesService(mapElement);
-    resolvePlace(ps, locationInfo.name, function (error, place) {
+    resolvePlace(ps, activity.location, function (error, place) {
         let map = new google.maps.Map(mapElement, {
             center: place.geometry.location,
             zoom: 8
@@ -138,7 +138,7 @@ var initmap = function () {
             map: map
         });
         let infoContainer = document.getElementById('info-content');
-        fillInfoContainer(infoContainer, locationInfo, place);
+        fillInfoContainer(infoContainer, activity, place);
         infoContainer.hidden = false;
         let infoWindow = new google.maps.InfoWindow({
             content: infoContainer
