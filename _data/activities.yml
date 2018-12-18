@@ -1,0 +1,12 @@
+- date: "2018-12-16"
+  location: Prayagraj, UP, India
+  description: Some random thing that Modi had to do here
+  ref: { source: "NDTV", url: "http://example.com" }
+- date: "2018-12-17"
+  location: Raebareli, UP, India
+  description: Some other random thing that Modi had to do here
+  ref: { source: "NDTV", url: "http://example.com" }
+- date: "2018-12-18"
+  location: Delhi, India
+  description: Some other random thing that Modi had to do here
+  ref: { source: "NDTV", url: "http://example.com" }
