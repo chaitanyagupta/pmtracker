@@ -93,7 +93,7 @@ let fillInfoContainer = function (container, activity, place) {
         container.querySelector('.info-photo-container').hidden = false;
         let img = container.querySelector('.info-photo');
         let photo = place.photos[getRandomInt(place.photos.length)];
-        img.src = photo.getUrl({ maxWidth: 100, maxHeight: 100 });
+        img.src = photo.getUrl({ maxWidth: 80, maxHeight: 80 });
     }
     // date
     let dateElement = container.querySelector('.info-date');

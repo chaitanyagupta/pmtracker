@@ -39,11 +39,6 @@ html, body {
     float: right;
 }
 
-.info-photo {
-    max-width: 100px;
-    max-height: 100px;
-}
-
 /* Time period controls */
 #time-period-controls {
     font-size: 1.25em;
