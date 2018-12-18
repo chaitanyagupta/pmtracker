@@ -188,15 +188,13 @@ let selectedActivities = function () {
 
 let closeInfoWindow = function (infoWindow) {
     infoWindow.close();
-    infoWindow.content.hidden = true;
-    document.body.appendChild(infoWindow.content);
 };
 
 let displayInfo = function (map, activity, place, marker, current) {
     if (current) { 
         closeInfoWindow(current);
     }
-    let infoContainer = document.getElementById('info-content');
+    let infoContainer = document.getElementById('info-content').cloneNode(true);
     fillInfoContainer(infoContainer, activity, place);
     infoContainer.hidden = false;
     let infoWindow = new google.maps.InfoWindow({
