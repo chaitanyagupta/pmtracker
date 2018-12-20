@@ -164,8 +164,8 @@ let parseDateBounds = function (query) {
             return bounds(today, today);
         }
     } else {
-        // Return today for unrecognized strings
-        return bounds(today, today);
+        // Default to 7 days
+        return parseDateBounds({ start: '7d' });
     }
 };
 
