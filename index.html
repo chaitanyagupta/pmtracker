@@ -6,6 +6,7 @@
     <title>PM {{site.data.pm.surname}} Tracker</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="icomoon/style.css">
     <link rel="stylesheet" href="pmtracker.css">
     <script>
       var allActivities = {{ site.data.activities | jsonify }};
@@ -43,7 +44,7 @@
       </form>
     </div>
     <div id="footer">
-      Created by <a href="https://chaitanyagupta.com">Chaitanya Gupta</a> <a href="https://twitter.com/chaitanya_gupta"><img class="footer-logo" src="twitter-brands.svg"></a>
+      Created by <a href="https://chaitanyagupta.com">Chaitanya Gupta</a> <a class="brand-link" href="https://twitter.com/chaitanya_gupta"><span class="icon-twitter adjust-icon"></span></a>
     </div>
     <script src="pmtracker.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxxmf1EGaVzxC_AZPkN0Mg_2vWRyJybtM&libraries=places&callback=initmap" async defer></script>
