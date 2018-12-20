@@ -36,7 +36,7 @@ html, body {
 }
 
 .info-event-source {
-    text-decoration: none;
+    padding-left: 2px;
 }
 
 .info-photo-container {
@@ -65,11 +65,11 @@ html, body {
     color: #1DA1F2;
 }
 
-.brand-link {
+.inline-icon-link {
     text-decoration: none;
 }
 
-.adjust-icon {
+.inline-icon {
     vertical-align: middle;
 }
 
