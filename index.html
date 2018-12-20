@@ -15,15 +15,14 @@
   <body>
     <div id="map"></div>
     <div id="info-content" hidden>
-      <div>
-        <div class="info-photo-container" hidden><img class="info-photo"></div>
-        <div class="info-headline today">PM {{site.data.pm.surname}} is at</div>
-        <div class="info-headline past">PM {{site.data.pm.surname}} was at</div>
-        <div class="info-location-name"></div>
-        <div><time class="info-date"></time></div>
-        <div class="info-activity"></div>
-        <div>
-          Source: <a class="info-ref"></a>
+      <div class="info-photo-container" hidden><img class="info-photo"></div>
+      <div class="info-headline today">PM {{site.data.pm.surname}} is at</div>
+      <div class="info-headline past">PM {{site.data.pm.surname}} was at</div>
+      <div class="info-location-name"></div>
+      <div><time class="info-date"></time></div>
+      <div class="info-events">
+        <div class="info-event">
+          <a class="info-event-source"><span class="icon-external-link adjust-icon"></span></a> <span class="info-event-description"></span>
         </div>
       </div>
     </div>

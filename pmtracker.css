@@ -31,8 +31,12 @@ html, body {
     font-weight: bold;
 }
 
-.info-activity {
+.info-events {
     padding-top: 1em;
+}
+
+.info-event-source {
+    text-decoration: none;
 }
 
 .info-photo-container {
@@ -61,7 +65,14 @@ html, body {
     color: #1DA1F2;
 }
 
-.footer-logo {
-    height: 1em;
-    vertical-align: bottom;
+.brand-link {
+    text-decoration: none;
+}
+
+.adjust-icon {
+    vertical-align: middle;
+}
+
+.icon-twitter {
+    color: #1DA1F2;
 }
