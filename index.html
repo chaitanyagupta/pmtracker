@@ -25,7 +25,9 @@
           <a class="info-event-source"><span class="icon-external-link inline-icon"></span></a> <span class="info-event-description"></span>
         </div>
       </div>
-      <div class="info-no-events" hidden><em>Assumed to be here.</em> If you know better, please <a href="mailto:{{site.data.meta.creator.email}}">email us</a> or <a href="https://github.com/{{site.data.meta.github}}">submit a pull request</a>.</div>
+      <div class="info-no-events" hidden>
+        <em>Assumed to be here.</em> If you know better, please <a href="/about#contributing">let us know</a>.
+      </div>
     </div>
     <div id="time-period-controls" hidden>
       <form id="time-period-form" method="GET" action="/">
@@ -42,6 +44,10 @@
           </label>
         </div>
       </form>
+    </div>
+    <div class="dismissable-control" id="today-warning" hidden>
+      <div class="content">No data available for today. If you know better, please <a href="/about#contributing">let us know</a>.</div>
+      <button class="closer no-decorate pointer" type="button"><span class="icon-close"></span></button>
     </div>
     <div id="footer">
       By <a href="{{site.data.meta.creator.url}}">{{site.data.meta.creator.name}}</a> <a class="inline-icon-link" href="https://twitter.com/{{site.data.meta.creator.twitter}}"><span class="icon-twitter inline-icon"></span></a> • <a href="/about">About</a>

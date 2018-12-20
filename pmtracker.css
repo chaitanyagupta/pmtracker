@@ -80,3 +80,36 @@ html, body {
 .icon-twitter {
     color: #1DA1F2;
 }
+
+/* Today warning */
+#today-warning {
+    border: 1px solid lightgray;
+    background: white;
+    font-size: 1.25em;
+    padding: 0.25em;
+    display: flex;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+#today-warning .closer {
+    margin-left: 0.25em;
+    min-width: 20px;
+}
+
+/* Non-decorative buttons */
+
+.no-decorate {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
+.no-decorate:focus {
+  outline: none;
+}
+
+.pointer {
+  cursor: pointer;
+}

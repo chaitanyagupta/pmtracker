@@ -228,11 +228,16 @@ let displayActivities = function (context) {
             marker.addListener('click', function () {
                 context.infoWindow = displayInfo(context.map, activity, place, marker, context.infoWindow);
             });
-            if (activity === lastActivity) {
+            if (activity === lastActivity && activity.date === today) {
                 context.infoWindow = displayInfo(context.map, activity, place, marker, context.infoWindow);
             }
         });
     });
+    if (!activities.some(function (activity) {return activity.date === today;})) {
+        let todayWarning = document.getElementById('today-warning');
+        todayWarning.hidden = false;
+        context.map.controls[google.maps.ControlPosition.CENTER].push(todayWarning);
+    }
 };
 
 var initmap = function () {
@@ -259,6 +264,9 @@ var initmap = function () {
         if (context.infoWindow) {
             closeInfoWindow(context.infoWindow);
         }
+        document.querySelectorAll('.dismissable-control').forEach(function (control) {
+            control.remove();
+        });
     });
 };
 
@@ -270,5 +278,11 @@ document.querySelectorAll('input[name=start]').forEach(function (input) {
     }
     input.addEventListener('change', function () {
         input.form.submit();
+    });
+});
+
+document.querySelectorAll('.closer').forEach(function (button) {
+    button.addEventListener('click', function () {
+        button.parentNode.remove();
     });
 });
