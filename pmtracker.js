@@ -113,16 +113,21 @@ let fillInfoContainer = function (container, activity, place) {
     // location name
     container.querySelector('.info-location-name').textContent = activity.location;
     // events
-    let eventElement = container.querySelector('.info-event');
-    activity.events.forEach(function (event) {
-        let element = eventElement.cloneNode(true);
-        element.querySelector('.info-event-description').textContent = event.description;
-        let anchor = element.querySelector('.info-event-source');
-        anchor.title = event.source;
-        anchor.href = event.url;
-        eventElement.parentNode.appendChild(element);
-    });
-    eventElement.remove();
+    if (activity.events) {
+        let eventElement = container.querySelector('.info-event');
+        activity.events.forEach(function (event) {
+            let element = eventElement.cloneNode(true);
+            element.querySelector('.info-event-description').textContent = event.description;
+            let anchor = element.querySelector('.info-event-source');
+            anchor.title = event.source;
+            anchor.href = event.url;
+            eventElement.parentNode.appendChild(element);
+        });
+        eventElement.remove();
+    } else {
+        container.querySelector('.info-events').hidden = true;
+        container.querySelector('.info-no-events').hidden = false;
+    }
 };
 
 let resolvePlace = function (service, locationName, callback) {

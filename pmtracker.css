@@ -39,6 +39,10 @@ html, body {
     padding-left: 2px;
 }
 
+.info-no-events {
+    padding-top: 1em;
+}
+
 .info-photo-container {
     float: right;
 }
