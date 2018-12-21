@@ -1,3 +1,19 @@
+- date: 2018-12-13..2018-12-15
+  location: New Delhi, India
+- date: 2018-12-16
+  location: Prayagraj, UP, India
+  events:
+    - description: Launches development projects and inaugurates new Airport Complex
+      source: PMO
+      url: http://www.pmindia.gov.in/en/news_updates/pm-at-prayagraj-inaugurates-new-airport-complex-integrated-command-and-control-centre-for-kumbh-mela-launches-development-projects/?comment=disable
+- date: 2018-12-16
+  location: Rae Bareli, UP, India
+  events:
+    - description: Launches development projects
+      source: PMO
+      url: http://www.pmindia.gov.in/en/news_updates/pm-launches-development-projects-in-rae-bareli/?comment=disable
+- date: 2018-12-17
+  location: New Delhi, India
 - date: 2018-12-18
   location: Mumbai, India
   events:
@@ -19,11 +35,11 @@
     - description: PM lays the foundation stone of Metro Phase 3
       source: PMO
       url: http://www.pmindia.gov.in/en/news_updates/pms-address-at-the-laying-of-the-foundation-stone-of-metro-phase-3-in-pune-maharashtra/?comment=disable
-- date: 2018-12-19
+- date: 2018-12-19..2018-12-20
   location: New Delhi, India
+- date: 2018-12-21
+  location: Kevadia, Gujarat, India
   events:
-    - description: Newly elected Sarpanches from J&K call on PM
+    - description: Taking part in the DGPs/IGPs conference
       source: PMO
-      url: http://www.pmindia.gov.in/en/news_updates/newly-elected-sarpanches-from-jk-call-on-pm/?comment=disable
-- date: 2018-12-20
-  location: New Delhi, India
+      url: https://twitter.com/PMOIndia/status/1075957919257112577

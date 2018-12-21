@@ -82,12 +82,44 @@ let ISODateString = function (date) {
     return [parts[2], parts[0], parts[1]].join('-');
 };
 
-let fillInfoContainer = function (container, activity, place) {
+let humanizeDate = function (date, today, expandToday) {
     let locale = resolveLocale();
+    let dateOptions = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: DEFAULT_TIMEZONE
+    };
+    if (today === date) {
+        if (expandToday) {
+            return 'Today (' + (new Date(date)).toLocaleString(locale, dateOptions) + ')';
+        } else {
+            return 'Today';
+        }
+    } else {
+        return (new Date(date)).toLocaleString(locale, dateOptions);
+    }
+};
+
+let humanizeDateRange = function (range, today) {
+    if (range.start === range.end) {
+        return [humanizeDate(range.start, today, true)];
+    } else {
+        return [humanizeDate(range.start, today, false), humanizeDate(range.end, today, false)];
+    }
+};
+
+let fillInfoContainer = function (container, activity, place) {
     let today = ISODateString(new Date());
     // headline
-    container.querySelector('.info-headline.today').hidden = (today !== activity.date);
-    container.querySelector('.info-headline.past').hidden = (today === activity.date);
+    let todayRange = makerange(today, today);
+    if (activity.range.contains(today)) {
+        container.querySelector('.info-headline.today').hidden = false;
+    } else if (activity.range.lessThan(todayRange)) {
+        container.querySelector('.info-headline.past').hidden = false;
+    } else if (activity.range.greaterThan(todayRange)) {
+        container.querySelector('.info-headline.future').hidden = false;
+    }
     // image
     if (place.photos && place.photos.length > 0) {
         container.querySelector('.info-photo-container').hidden = false;
@@ -96,19 +128,14 @@ let fillInfoContainer = function (container, activity, place) {
         img.src = photo.getUrl({ maxWidth: 80, maxHeight: 80 });
     }
     // date
-    let dateElement = container.querySelector('.info-date');
-    dateElement.dateTime = activity.date;
-    let dateOptions = {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        timeZone: DEFAULT_TIMEZONE
-    };
-    if (today === activity.date) {
-        dateElement.textContent = 'Today (' + (new Date(activity.date)).toLocaleString(locale, dateOptions) + ')';
+    let humanizedDateRange = humanizeDateRange(activity.range, today);
+    if (humanizedDateRange.length == 2) {
+        container.querySelector('.info-date-range').hidden = false;
+        container.querySelector('.info-date-start').textContent = humanizedDateRange[0];
+        container.querySelector('.info-date-end').textContent = humanizedDateRange[1];
     } else {
-        dateOptions.weekday = 'long';
-        dateElement.textContent = (new Date(activity.date)).toLocaleString(locale, dateOptions);
+        container.querySelector('.info-date-single').hidden = false;
+        container.querySelector('.info-date').textContent = humanizedDateRange[0];
     }
     // location name
     container.querySelector('.info-location-name').textContent = activity.location;
@@ -126,7 +153,11 @@ let fillInfoContainer = function (container, activity, place) {
         eventElement.remove();
     } else {
         container.querySelector('.info-events').hidden = true;
-        container.querySelector('.info-no-events').hidden = false;
+        if (activity.location === capital) {
+            container.querySelector('.info-no-events.capital').hidden = false;
+        } else {
+            container.querySelector('.info-no-events.non-capital').hidden = false;
+        }
     }
 };
 
@@ -149,18 +180,34 @@ let resolvePlace = function (service, locationName, callback) {
     });
 };
 
-let bounds = function (start, end) {
-    return [start, end];
+let makerange = function (start, end) {
+    if (end < start) {
+        throw new Error('End of range cannot be less than start', start, end);
+    }
+    return { 
+        start: start,
+        end: end,
+        equal: function (that) {
+            return this.start === that.start && this.end === that.end;            
+        },
+        lessThan: function (that) {
+            return this.end < that.start;
+        },
+        greaterThan: function (that) {
+            return this.start > that.end;
+        },
+        overlaps: function (that) {
+            return this.start <= that.end && this.end >= that.start;
+        },
+        contains: function (value) {
+            return this.start <= value && this.end >= value;
+        }
+    };
 };
 
-let startBounds = function (bounds) { return bounds[0]; };
-let endBounds = function (bounds) { return bounds[1]; };
+let MSEC_PER_DAY = 86400000;
 
-let equalBounds = function (b1, b2) {
-    return startBounds(b1) === startBounds(b2) && endBounds(b1) === endBounds(b2);
-};
-
-let parseDateBounds = function (query) {
+let parseDateRange = function (query) {
     query = query || QS.parse(window.location.search);
     let now = new Date();
     let today = ISODateString(now);
@@ -168,31 +215,47 @@ let parseDateBounds = function (query) {
         if (query.start.match(/^[0-9]+d/)) {
             let days = parseInt(query.start.match(/^[0-9]+/));
             let start = ISODateString(new Date(now - ((days - 1) * MSEC_PER_DAY)));
-            return bounds(start, today);
+            return makerange(start, today);
         } else if (query.start === 'today') {
-            return bounds(today, today);
+            return makerange(today, today);
         }
     } else {
         // Default to 7 days
-        return parseDateBounds({ start: '7d' });
+        return parseDateRange({ start: '7d' });
     }
 };
 
-let MSEC_PER_DAY = 86400000;
-
-let filterActivities = function (bounds) {
-    return allActivities.filter(function (activity) {
-        return activity.date >= startBounds(bounds) && activity.date <= endBounds(bounds);
-    });
+let filterActivities = function (activities, range) {
+    let today = ISODateString(new Date());
+    let filtered = [];
+    for (var i = activities.length - 1; i >= 0; --i) {
+        let activity = activities[i];
+        var datepair = activity.date.split('..');
+        if (datepair.length === 1) {
+            activity.range = makerange(datepair[0], datepair[0]);
+        } else if (datepair.length === 2) {
+            if (datepair[1] === '') {
+                activity.range = makerange(datepair[0], today);
+            } else {
+                activity.range = makerange(datepair[0], datepair[1]);
+            }
+        }
+        if (!activity.range) {
+            throw new Error('No arange for activity', activity);
+        }
+        if (activity.range.greaterThan(range)) {
+            continue;
+        } else if (activity.range.lessThan(range)) {
+            break;
+        } else {
+            filtered.push(activity);
+        }
+    }
+    return filtered.reverse();
 };
 
 let selectedActivities = function () {
-    let activities = filterActivities(parseDateBounds());
-    if (activities.length > 0) {
-        return activities;
-    } else {
-        return [allActivities[allActivities.length - 1]];
-    }
+    return filterActivities(allActivities, parseDateRange());
 };
 
 let closeInfoWindow = function (infoWindow) {
@@ -213,6 +276,9 @@ let displayInfo = function (map, activity, place, marker, current) {
     return infoWindow;
 };
 
+const BLUE_MARKER_ICON = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+const RED_MARKER_ICON = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+
 let displayActivities = function (context) {
     let activities = selectedActivities();
     let lastActivity = activities[activities.length - 1];
@@ -223,17 +289,18 @@ let displayActivities = function (context) {
                 position: place.geometry.location,
                 map: context.map,
                 title: activity.location,
-                opacity: (activity.date === today ? 1.0 : 0.5)
+                opacity: (activity.range.contains(today) ? 1.0 : 0.5),
+
             });
             marker.addListener('click', function () {
                 context.infoWindow = displayInfo(context.map, activity, place, marker, context.infoWindow);
             });
-            if (activity === lastActivity && activity.date === today) {
+            if (activity === lastActivity && activity.range.contains(today)) {
                 context.infoWindow = displayInfo(context.map, activity, place, marker, context.infoWindow);
             }
         });
     });
-    if (!activities.some(function (activity) {return activity.date === today;})) {
+    if (!activities.some(function (activity) { return activity.range.contains(today); })) {
         let todayWarning = document.getElementById('today-warning');
         todayWarning.hidden = false;
         context.map.controls[google.maps.ControlPosition.CENTER].push(todayWarning);
@@ -271,9 +338,9 @@ var initmap = function () {
 };
 
 document.querySelectorAll('input[name=start]').forEach(function (input) {
-    let pageBounds = parseDateBounds();
-    let inputBounds = parseDateBounds({ start: input.value });
-    if (equalBounds(inputBounds, pageBounds)) {
+    let pageRange = parseDateRange();
+    let inputRange = parseDateRange({ start: input.value });
+    if (inputRange.equal(pageRange)) {
         input.checked = true;
     }
     input.addEventListener('change', function () {

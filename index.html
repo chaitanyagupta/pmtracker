@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="icomoon/style.css">
     <link rel="stylesheet" href="pmtracker.css">
     <script>
+      let capital = "{{site.data.pm.capital}}";
       var allActivities = {{ site.data.activities | jsonify }};
     </script>
     {% include analytics.html %}
@@ -16,18 +17,23 @@
   <body>
     <div id="map"></div>
     <div id="info-content" hidden>
+      <div class="info-headline today" hidden>PM {{site.data.pm.surname}} is at</div>
+      <div class="info-headline past" hidden>PM {{site.data.pm.surname}} was at</div>
+      <div class="info-headline future" hidden>PM {{site.data.pm.surname}} will be at</div>
       <div class="info-photo-container" hidden><img class="info-photo"></div>
-      <div class="info-headline today">PM {{site.data.pm.surname}} is at</div>
-      <div class="info-headline past">PM {{site.data.pm.surname}} was at</div>
       <div class="info-location-name"></div>
-      <div><time class="info-date"></time></div>
+      <div class="info-date-range" hidden><time class="info-date-start"></time> - <time class="info-date-end"></time></div>
+      <div class="info-date-single" hidden><time class="info-date"></time></div>
       <div class="info-events">
         <div class="info-event">
-          <a class="info-event-source"><span class="icon-external-link inline-icon"></span></a> <span class="info-event-description"></span>
+          <a class="info-event-source inline-icon-link"><span class="icon-external-link inline-icon"></span></a> <span class="info-event-description"></span>
         </div>
       </div>
-      <div class="info-no-events" hidden>
-        <em>Assumed to be here.</em> If you know better, please <a href="/about#contributing">let us know</a>.
+      <div class="info-no-events capital" hidden>
+        <em>In the capital.</em>
+      </div>
+      <div class="info-no-events non-capital" hidden>
+        <em>No event details.</em>
       </div>
     </div>
     <div id="time-period-controls" hidden>
