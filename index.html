@@ -11,6 +11,7 @@
     <script>
       let capital = "{{site.data.pm.capital}}";
       var allActivities = {{ site.data.activities | jsonify }};
+      var allPlaces = {{ site.data.places | jsonify }};
     </script>
     {% include analytics.html %}
   </head>

@@ -3,7 +3,7 @@
 let DEFAULT_LOCALE = 'en-IN';
 let DEFAULT_TIMEZONE = 'Asia/Kolkata';
 
-let apiKey = 'AIzaSyAxxmf1EGaVzxC_AZPkN0Mg_2vWRyJybtM';
+let API_KEY = 'AIzaSyAxxmf1EGaVzxC_AZPkN0Mg_2vWRyJybtM';
 
 let getRandomInt = function (max) {
   return Math.floor(Math.random() * Math.floor(max));
@@ -44,7 +44,7 @@ let geocode = function (address, callback) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'https://maps.googleapis.com/maps/api/geocode/json?' + QS.stringify({
         address: address,
-        key: apiKey
+        key: API_KEY
     }));
     xhr.addEventListener('load', function () {
         if (xhr.status === 200) {
@@ -109,6 +109,30 @@ let humanizeDateRange = function (range, today) {
     }
 };
 
+// places
+
+let resolvePlace = function (locationName, callback) {
+    setTimeout(function () {
+        let place = allPlaces[locationName];
+        if (place) {
+            callback(null, place);
+        } else {
+            callback(new Error("Couldn't find place: " + locationName));
+        }
+    });
+};
+
+const PHOTOS_API_URL = 'https://maps.googleapis.com/maps/api/place/photo';
+
+let getPhotoUrl = function (photo, maxWidth, maxHeight) {
+    return PHOTOS_API_URL + '?' + QS.stringify({
+        key: API_KEY,
+        photoreference: photo.photo_reference,
+        maxwidth: maxWidth,
+        maxheight: maxHeight
+    });
+};
+
 let fillInfoContainer = function (container, activity, place) {
     let today = ISODateString(new Date());
     // headline
@@ -125,7 +149,7 @@ let fillInfoContainer = function (container, activity, place) {
         container.querySelector('.info-photo-container').hidden = false;
         let img = container.querySelector('.info-photo');
         let photo = place.photos[getRandomInt(place.photos.length)];
-        img.src = photo.getUrl({ maxWidth: 80, maxHeight: 80 });
+        img.src = getPhotoUrl(photo, 80, 80);
     }
     // date
     let humanizedDateRange = humanizeDateRange(activity.range, today);
@@ -159,25 +183,6 @@ let fillInfoContainer = function (container, activity, place) {
             container.querySelector('.info-no-events.non-capital').hidden = false;
         }
     }
-};
-
-let resolvePlace = function (service, locationName, callback) {
-    let request = {
-        query: locationName,
-        fields: ['photos', 'name', 'geometry']
-    }
-    service.findPlaceFromQuery(request, function (results, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-            if (results.length > 0) {
-                let place = results[0];
-                callback(null, place);
-            } else {
-                console.warn('Got zero results back');
-            }
-        } else {
-            console.warn('find place from query status not ok', status);
-        }
-    });
 };
 
 let makerange = function (start, end) {
@@ -284,7 +289,7 @@ let displayActivities = function (context) {
     let lastActivity = activities[activities.length - 1];
     let today = ISODateString(new Date());
     activities.forEach(function (activity) {
-        resolvePlace(context.ps, activity.location, function (error, place) {
+        resolvePlace(activity.location, function (error, place) {
             let marker = new google.maps.Marker({
                 position: place.geometry.location,
                 map: context.map,
