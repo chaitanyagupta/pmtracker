@@ -3,7 +3,7 @@
 let DEFAULT_LOCALE = 'en-IN';
 let DEFAULT_TIMEZONE = 'Asia/Kolkata';
 
-let API_KEY = 'AIzaSyAxxmf1EGaVzxC_AZPkN0Mg_2vWRyJybtM';
+let API_KEY = 'AIzaSyBFz4FlujH-2b1r3rGLSJJO0bWBKgPdov4';
 
 let getRandomInt = function (max) {
   return Math.floor(Math.random() * Math.floor(max));
