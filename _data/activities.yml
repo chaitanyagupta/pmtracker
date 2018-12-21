@@ -1,21 +1,135 @@
+- date: 2018-11-23
+  location: Aizawl, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1065850851397234688
+- date: 2018-11-24
+  location: Mandsaur, MP
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1066323712058761216
+- date: 2018-11-25
+  location: Vidisha, MP
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1066695168277893120
+- date: 2018-11-25
+  location: Jabalpur, MP
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1066726193590923264
+- date: 2018-11-26
+  location: Bhilwara, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1066932288619864070
+- date: 2018-11-26
+  location: Beneshwar Dham, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1067026877368291329
+- date: 2018-11-26
+  location: Kota, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1067079786202316805
+- date: 2018-11-27
+  location: Nizamabad, Telangana
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1067309212902948864
+- date: 2018-11-28
+  location: Mahabubnagar, Telangana
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1067351611922571265
+- date: 2018-11-28
+  location: Nagaur, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1067661386275155968
+- date: 2018-11-28
+  location: Bharatpur, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1067713427856998400
+- date: 2018-11-29..2018-12-01
+  location: Buenos Aires, Argentina
+  events:
+    - description: G-20 Summit
+      source: PMO
+      url: http://www.pmindia.gov.in/en/news_updates/pms-statement-prior-to-attending-the-g-20-summit/?comment=disable
+- date: 2018-12-03
+  location: Jodhpur, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1069525178369986561
+- date: 2018-12-03
+  location: Hyderabad, Telangana
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1069580046094880769
+- date: 2018-12-04
+  location: Hanumangarh, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1069837760570130432
+- date: 2018-12-04
+  location: Sikar, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1069887229424627712
+- date: 2018-12-04
+  location: Jaipur, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1069924276617146368
+- date: 2018-12-05
+  location: Sumerpur, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1070207702633078784
+- date: 2018-12-05
+  location: Dausa, Rajasthan
+  events:
+    - description: Campaign Rally
+      source: "@narendramodi"
+      url: https://twitter.com/narendramodi/status/1070259593836560385
 - date: 2018-12-13..2018-12-15
   location: New Delhi, India
 - date: 2018-12-16
-  location: Prayagraj, UP, India
+  location: Prayagraj, UP
   events:
     - description: Launches development projects and inaugurates new Airport Complex
       source: PMO
       url: http://www.pmindia.gov.in/en/news_updates/pm-at-prayagraj-inaugurates-new-airport-complex-integrated-command-and-control-centre-for-kumbh-mela-launches-development-projects/?comment=disable
 - date: 2018-12-16
-  location: Rae Bareli, UP, India
+  location: Rae Bareli, UP
   events:
     - description: Launches development projects
       source: PMO
       url: http://www.pmindia.gov.in/en/news_updates/pm-launches-development-projects-in-rae-bareli/?comment=disable
 - date: 2018-12-17
-  location: New Delhi, India
+  location: New Delhi
 - date: 2018-12-18
-  location: Mumbai, India
+  location: Mumbai, Maharashtra
   events:
     - description: PM addresses Republic TV summit
       source: PMO
@@ -30,15 +144,15 @@
       source: PMO
       url: http://www.pmindia.gov.in/en/news_updates/delegation-from-film-and-entertainment-industry-meets-pm/?comment=disable
 - date: 2018-12-18
-  location: Pune, India
+  location: Pune, Maharashtra
   events:
     - description: PM lays the foundation stone of Metro Phase 3
       source: PMO
       url: http://www.pmindia.gov.in/en/news_updates/pms-address-at-the-laying-of-the-foundation-stone-of-metro-phase-3-in-pune-maharashtra/?comment=disable
 - date: 2018-12-19..2018-12-20
-  location: New Delhi, India
+  location: New Delhi
 - date: 2018-12-21
-  location: Kevadia, Gujarat, India
+  location: Kevadia, Gujarat
   events:
     - description: Taking part in the DGPs/IGPs conference
       source: PMO
