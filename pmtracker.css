@@ -45,6 +45,8 @@ html, body {
 
 .info-photo-container {
     float: right;
+    width: 80px;
+    height: 80px;
 }
 
 /* Time period controls */
