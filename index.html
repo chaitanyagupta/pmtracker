@@ -17,14 +17,18 @@
   </head>
   <body>
     <div id="map"></div>
-    <div id="info-content" hidden>
-      <div class="info-headline today" hidden>PM {{site.data.pm.surname}} is at</div>
-      <div class="info-headline past" hidden>PM {{site.data.pm.surname}} was at</div>
-      <div class="info-headline future" hidden>PM {{site.data.pm.surname}} will be at</div>
-      <div class="info-photo-container" hidden><img class="info-photo"></div>
-      <div class="info-location-name"></div>
-      <div class="info-date-range" hidden><time class="info-date-start"></time> - <time class="info-date-end"></time></div>
-      <div class="info-date-single" hidden><time class="info-date"></time></div>
+    <div class="info-content" hidden>
+      <div class="info-top-container">
+        <div>
+          <div class="info-headline today" hidden>PM {{site.data.pm.surname}} is at</div>
+          <div class="info-headline past" hidden>PM {{site.data.pm.surname}} was at</div>
+          <div class="info-headline future" hidden>PM {{site.data.pm.surname}} will be at</div>
+          <div class="info-location-name"></div>
+          <div class="info-date-range" hidden><time class="info-date-start"></time> - <time class="info-date-end"></time></div>
+          <div class="info-date-single" hidden><time class="info-date"></time></div>
+        </div>
+        <div class="info-photo-container" hidden><img class="info-photo"></div>
+      </div>
       <div class="info-events">
         <div class="info-event">
           <a class="info-event-source inline-icon-link"><span class="icon-external-link inline-icon"></span></a> <span class="info-event-description"></span>

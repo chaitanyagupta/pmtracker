@@ -20,6 +20,15 @@ html, body {
     padding: 0;
 }
 
+.info-content {
+    max-width: 320px;
+}
+
+.info-top-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Info window */
 .info-headline {
     font-size: 1.5em;
@@ -45,6 +54,7 @@ html, body {
 
 .info-photo-container {
     float: right;
+    margin-left: 1em;
     width: 80px;
     height: 80px;
 }

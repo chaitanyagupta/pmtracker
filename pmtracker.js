@@ -271,7 +271,7 @@ let displayInfo = function (map, activity, place, marker, current) {
     if (current) { 
         closeInfoWindow(current);
     }
-    let infoContainer = document.getElementById('info-content').cloneNode(true);
+    let infoContainer = document.querySelector('.info-content').cloneNode(true);
     fillInfoContainer(infoContainer, activity, place);
     infoContainer.hidden = false;
     let infoWindow = new google.maps.InfoWindow({
