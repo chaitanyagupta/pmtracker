@@ -88,7 +88,7 @@ exports.gen = function (input, output) {
         return activity.location;
     });
     getPlaces(locations, function (data) {
-        fs.writeFileSync(output, JSON.stringify(data));
+        fs.writeFileSync(output, JSON.stringify(data, null, 4));
         console.log('Updated', output);
     });
 };
