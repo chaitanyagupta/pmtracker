@@ -2,7 +2,7 @@
 
 let axios = require('axios');
 
-const API_KEY = 'AIzaSyAxxmf1EGaVzxC_AZPkN0Mg_2vWRyJybtM';
+const API_KEY = 'AIzaSyBFz4FlujH-2b1r3rGLSJJO0bWBKgPdov4';
 const PLACES_API_URL = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
 const LOCATION_BIAS_POINT = { lat: 21.15, lng: 79.09 }; // Nagpur
 const LOCATION_BIAS_RADIUS = 2000 * 1000; // 2000 km
