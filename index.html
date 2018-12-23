@@ -57,12 +57,18 @@
         </div>
       </form>
     </div>
-    <div class="dismissable-control" id="today-warning" hidden>
-      <div class="content">No data available for today. If you know better, please <a href="/about#contributing">let us know</a>.</div>
-      <button class="closer no-decorate pointer" type="button"><span class="icon-close"></span></button>
-    </div>
     <div id="footer">
-      By <a href="{{site.data.meta.creator.url}}">{{site.data.meta.creator.name}}</a> <a class="inline-icon-link" href="https://twitter.com/{{site.data.meta.creator.twitter}}"><span class="icon-twitter inline-icon"></span></a> • <a href="/about">About</a>
+      <div class="footer-control centering-container" id="today-warning" hidden>
+        <div class="footer-control-content" id="today-warning-container">
+          <div class="content">No data available for today. If you know better, please <a href="/about#contributing">let us know</a>.</div>
+          <button class="closer no-decorate pointer" type="button"><span class="icon-close"></span></button>
+        </div>
+      </div>
+      <div class="footer-control centering-container" id="site-meta">
+        <div class="footer-control-content">
+          By <a href="{{site.data.meta.creator.url}}">{{site.data.meta.creator.name}}</a> <a class="inline-icon-link" href="https://twitter.com/{{site.data.meta.creator.twitter}}"><span class="icon-twitter inline-icon"></span></a> • <a href="/about">About</a>
+        </div>
+      </div>
     </div>
     <script src="pmtracker.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{site.data.meta.mapsapikey}}&libraries=places&callback=initmap" async defer></script>

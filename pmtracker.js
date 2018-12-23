@@ -281,6 +281,12 @@ let displayInfo = function (map, activity, place, marker, current) {
     return infoWindow;
 };
 
+let removeChildNodes = function (node) {
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
+}
+
 const BLUE_MARKER_ICON = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
 const RED_MARKER_ICON = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
 
@@ -306,9 +312,7 @@ let displayActivities = function (context) {
         });
     });
     if (!activities.some(function (activity) { return activity.range.contains(today); })) {
-        let todayWarning = document.getElementById('today-warning');
-        todayWarning.hidden = false;
-        context.map.controls[google.maps.ControlPosition.CENTER].push(todayWarning);
+        document.getElementById('today-warning').hidden = false;
     }
 };
 
@@ -325,20 +329,19 @@ var initmap = function () {
     });
     let ps = new google.maps.places.PlacesService(map);
     let context = { map: map, ps: ps, infoWindow: null };
+    let bottomCenterControls = map.controls[google.maps.ControlPosition.BOTTOM_CENTER];
+    bottomCenterControls.push(document.getElementById('footer'));
     displayActivities(context);
     let tpControlsDiv = document.getElementById('time-period-controls');
     tpControlsDiv.hidden = false;
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(tpControlsDiv);
-    let footerDiv = document.getElementById('footer');
-    footerDiv.hidden = false;
-    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(footerDiv);
     map.addListener('click', function () {
         if (context.infoWindow) {
             closeInfoWindow(context.infoWindow);
         }
-        document.querySelectorAll('.dismissable-control').forEach(function (control) {
-            control.remove();
-        });
+    });
+    document.querySelector('#today-warning .closer').addEventListener('click', function () {
+        document.getElementById('today-warning').hidden = true;
     });
 };
 
@@ -350,11 +353,5 @@ document.querySelectorAll('input[name=start]').forEach(function (input) {
     }
     input.addEventListener('change', function () {
         input.form.submit();
-    });
-});
-
-document.querySelectorAll('.closer').forEach(function (button) {
-    button.addEventListener('click', function () {
-        button.parentNode.remove();
     });
 });
