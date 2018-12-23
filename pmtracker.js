@@ -111,15 +111,12 @@ let humanizeDateRange = function (range, today) {
 
 // places
 
-let resolvePlace = function (locationName, callback) {
-    setTimeout(function () {
-        let place = allPlaces[locationName];
-        if (place) {
-            callback(null, place);
-        } else {
-            callback(new Error("Couldn't find place: " + locationName));
-        }
-    });
+let resolvePlace = function (locationName) {
+    let place = allPlaces[locationName];
+    if (!place) {
+        console.warn("Couldn't find place:", locationName);
+    }
+    return place;
 };
 
 const PHOTOS_API_URL = 'https://maps.googleapis.com/maps/api/place/photo';
@@ -290,12 +287,33 @@ let removeChildNodes = function (node) {
 const BLUE_MARKER_ICON = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
 const RED_MARKER_ICON = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
 
+let boundsForCoordinates = function (coordinates) {
+    if (coordinates.length < 2) {
+        return null;
+    }
+    let minLat = 91, maxLat = -91;
+    let minLng = 181, maxLng = -181;
+    coordinates.forEach(function (c) {
+        if (c.lat < minLat) { minLat = c.lat; }
+        if (c.lat > maxLat) { maxLat = c.lat; }
+        if (c.lng < minLng) { minLng = c.lng; }
+        if (c.lng > maxLng) { maxLng = c.lng; }
+    });
+    return new google.maps.LatLngBounds({ lat: minLat, lng: minLng },
+                                        { lat: maxLat, lng: maxLng });
+};
+
 let displayActivities = function (context) {
     let activities = selectedActivities();
     let lastActivity = activities[activities.length - 1];
     let today = ISODateString(new Date());
+    let places = [];
     activities.forEach(function (activity) {
-        resolvePlace(activity.location, function (error, place) {
+        let place = resolvePlace(activity.location);
+        if (place) {
+            if (places.indexOf(place) === -1) {
+                places.push(place);
+            }
             let marker = new google.maps.Marker({
                 position: place.geometry.location,
                 map: context.map,
@@ -309,8 +327,12 @@ let displayActivities = function (context) {
             if (activity === lastActivity && activity.range.contains(today)) {
                 context.infoWindow = displayInfo(context.map, activity, place, marker, context.infoWindow);
             }
-        });
+        }
     });
+    let coordinates = places.map(function (place) {
+        return place.geometry.location;
+    });
+    context.map.fitBounds(boundsForCoordinates(coordinates), { top: 20, right: 20, bottom: 20, left: 20 });
     if (!activities.some(function (activity) { return activity.range.contains(today); })) {
         document.getElementById('today-warning').hidden = false;
     }
