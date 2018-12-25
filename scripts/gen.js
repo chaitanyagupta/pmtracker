@@ -56,29 +56,31 @@ TaskQueue.prototype.resume = function () {
 const QUEUE_LIMIT = 1;
 const PLACE_FIELDS = ['photos', 'name', 'geometry'];
 
-let getPlaces = exports.getPlaces = function (locations, callback) {
-    let tq = new TaskQueue(QUEUE_LIMIT);
-    let result = {};
-    locations = removeDuplicates(locations);
-    let count = locations.length;
-    // queue location lookup
-    locations.forEach(function (location) {
-        tq.add(function (taskId) {
-            places.resolvePlace(location, PLACE_FIELDS)
-                .then(function (data) {
-                    if (data.status === 'OK') {
-                        result[location] = data.candidates[0];
-                    } else {
-                        throw new Error("Couldn't resolve place for location: " + location + " status: " + data.status);
-                    }
-                })
-                .finally(function () {
-                    --count;
-                    tq.remove(taskId);
-                    if (count === 0) {
-                        callback(result);
-                    }
-                });
+let getPlaces = exports.getPlaces = function (locations) {
+    return new Promise(function (resolve, reject) {
+        let tq = new TaskQueue(QUEUE_LIMIT);
+        let result = {};
+        locations = removeDuplicates(locations);
+        let count = locations.length;
+        // queue location lookup
+        locations.forEach(function (location) {
+            tq.add(function (taskId) {
+                places.resolvePlace(location, PLACE_FIELDS)
+                    .then(function (data) {
+                        if (data.status === 'OK') {
+                            result[location] = data.candidates[0];
+                        } else {
+                            throw new Error("Couldn't resolve place for location: " + location + " status: " + data.status);
+                        }
+                    })
+                    .finally(function () {
+                        --count;
+                        tq.remove(taskId);
+                        if (count === 0) {
+                            resolve(result);
+                        }
+                    });
+            });
         });
     });
 };
@@ -89,8 +91,8 @@ let gen = exports.gen = function (input, output) {
     let locations = activities.map(function (activity) {
         return activity.location;
     });
-    getPlaces(locations, function (data) {
-        fs.writeFileSync(output, JSON.stringify(data, null, 4));
+    getPlaces(locations).then(function (places) {
+        fs.writeFileSync(output, JSON.stringify(places, null, 4));
         console.log('Updated', output);
     });
 };
