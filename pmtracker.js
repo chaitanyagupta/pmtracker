@@ -306,7 +306,7 @@ let displayActivities = function (context) {
     let coordinates = places.map(function (place) {
         return place.geometry.location;
     });
-    context.map.fitBounds(boundsForCoordinates(coordinates), { top: 20, right: 20, bottom: 20, left: 20 });
+    context.map.fitBounds(boundsForCoordinates(coordinates), { top: 30, right: 60, bottom: 40, left: 30 });
     if (!activities.some(function (activity) { return activity.range.contains(today); })) {
         document.getElementById('today-warning').hidden = false;
     }
