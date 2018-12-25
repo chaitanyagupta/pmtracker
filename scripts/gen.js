@@ -161,6 +161,11 @@ let gen = exports.gen = function (input, output, photosDirectory) {
     });
 };
 
+let setPlacesKey = exports.setPlacesKey = function (key) {
+    placeService.setKey(key);
+};
+
 if (require.main === module) {
+    setPlacesKey(process.env['PLACES_API_KEY']);
     gen('./_data/activities.yml', './_data/places.json', './place_photos/');
 }
