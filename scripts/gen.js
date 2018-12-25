@@ -2,7 +2,7 @@
 
 let fs = require('fs');
 let util = require('util');
-let places = require('./places');
+let placeService = require('./places');
 let yaml = require('node-yaml');
 
 let removeDuplicates = function (array) {
@@ -49,7 +49,9 @@ TaskQueue.prototype.resume = function () {
     while (this.active.length < this.limit && this.queued.length > 0) {
         let next = this.queued.shift();
         this.active.push(next);
-        this.tasks[next].call(this, next);
+        setImmediate(() => {
+            this.tasks[next].call(this, next);
+        });
     }
 };
 
@@ -65,7 +67,7 @@ let getPlaces = exports.getPlaces = function (locations) {
         // queue location lookup
         locations.forEach(function (location) {
             tq.add(function (taskId) {
-                places.resolvePlace(location, PLACE_FIELDS)
+                placeService.resolvePlace(location, PLACE_FIELDS)
                     .then(function (data) {
                         if (data.status === 'OK') {
                             result[location] = data.candidates[0];
@@ -85,18 +87,80 @@ let getPlaces = exports.getPlaces = function (locations) {
     });
 };
 
-let gen = exports.gen = function (input, output) {
+const PHOTO_TYPES = {
+    'image/jpeg': 'jpg',
+    'image/png': 'png'
+};
+
+const MAX_PHOTO_WIDTH = 80;
+
+let writePhotos = exports.writePhotos = function (places, directory) {
+    return new Promise(function (resolve, reject) {
+        let tq = new TaskQueue(QUEUE_LIMIT);
+        let count = 0;
+        places.forEach(function (place) {
+            place.photos.forEach(function (photo) {
+                let ref = photo.photo_reference;
+                let photoPath = function (extension) {
+                    return directory + ref + '.' + extension;
+                }
+                let photoExists = function (extension) { 
+                    return fs.existsSync(photoPath(extension));
+                }
+                let extensions = Object.values(PHOTO_TYPES);
+                if (!extensions.some(photoExists)) {
+                    ++count;
+                    tq.add(function (taskId) {
+                        console.log('Writing photo for: ' + place.name + ' ref: ' + ref);
+                        placeService.resolvePhoto(ref, MAX_PHOTO_WIDTH)
+                            .then(function (response) {
+                                let type = response.headers['content-type'];
+                                console.log('wrote photo with type: ' + type);
+                                let extension = PHOTO_TYPES[type];
+                                if (extension) {
+                                    fs.writeFileSync(photoPath(extension), response.data);
+                                    photo.extension = extension;
+                                } else {
+                                    throw new Error('Unknown image type: ' + type);
+                                }
+                            })
+                            .catch(function (error) {
+                                console.warn('Error writing photo: ' + error);
+                            })
+                            .finally(function () {
+                                tq.remove(taskId);
+                                --count;
+                                if (count === 0) {
+                                    resolve(true);
+                                }
+                            });
+                    });
+                }
+            });
+        });
+    });
+};
+
+let gen = exports.gen = function (input, output, photosDirectory) {
     let str = fs.readFileSync(input, {encoding: 'utf8'});
     let activities = yaml.parse(str, {schema: yaml.schema.defaultSafe});
     let locations = activities.map(function (activity) {
         return activity.location;
     });
-    getPlaces(locations).then(function (places) {
-        fs.writeFileSync(output, JSON.stringify(places, null, 4));
-        console.log('Updated', output);
+    getPlaces(locations).then(function (placeDictionary) {
+        console.log('Fetched all places');
+        return placeDictionary
+    }).then(function (placeDictionary) {
+        let places = Object.values(placeDictionary);
+        writePhotos(places, photosDirectory)
+            .then(function (status) {
+                console.log('Wrote all photos');
+                fs.writeFileSync(output, JSON.stringify(placeDictionary, null, 4));
+                console.log('Updated all places', output);
+            });
     });
 };
 
 if (require.main === module) {
-    gen('./_data/activities.yml', './_data/places.json');
+    gen('./_data/activities.yml', './_data/places.json', './place_photos/');
 }

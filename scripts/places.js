@@ -31,8 +31,9 @@ exports.resolvePhoto = function (reference, maxwidth) {
             key: API_KEY,
             photoreference: reference,
             maxwidth: maxwidth
-        }
+        },
+        responseType: 'arraybuffer'
     }).then(function (response) {
-        return response.data;
+        return response;
     });
 };
