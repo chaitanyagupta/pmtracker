@@ -1,5 +1,7 @@
 'use strict';
 
+let fs = require('fs');
+let util = require('util');
 let places = require('./places');
 let yaml = require('node-yaml');
 
@@ -81,7 +83,7 @@ let getPlaces = exports.getPlaces = function (locations, callback) {
     });
 };
 
-exports.gen = function (input, output) {
+let gen = exports.gen = function (input, output) {
     let str = fs.readFileSync(input, {encoding: 'utf8'});
     let activities = yaml.parse(str, {schema: yaml.schema.defaultSafe});
     let locations = activities.map(function (activity) {
@@ -92,3 +94,7 @@ exports.gen = function (input, output) {
         console.log('Updated', output);
     });
 };
+
+if (require.main === module) {
+    gen('./_data/activities.yml', './_data/places.json');
+}
