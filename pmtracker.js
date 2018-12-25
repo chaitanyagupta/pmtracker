@@ -3,8 +3,6 @@
 let DEFAULT_LOCALE = 'en-IN';
 let DEFAULT_TIMEZONE = 'Asia/Kolkata';
 
-let API_KEY = 'AIzaSyBFz4FlujH-2b1r3rGLSJJO0bWBKgPdov4';
-
 let getRandomInt = function (max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
@@ -38,25 +36,6 @@ let QS = {
         });
         return o;
     }
-};
-
-let geocode = function (address, callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://maps.googleapis.com/maps/api/geocode/json?' + QS.stringify({
-        address: address,
-        key: API_KEY
-    }));
-    xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
-            callback(null, JSON.parse(xhr.responseText));
-        } else {
-            callback(new Error('Unexpected status code: ' + xhr.status));
-        }
-    });
-    xhr.addEventListener('error', function (event) {
-        callback(event.error);
-    });
-    xhr.send();
 };
 
 let resolveLocale = function () {
