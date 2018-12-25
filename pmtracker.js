@@ -121,13 +121,8 @@ let resolvePlace = function (locationName) {
 
 const PHOTOS_API_URL = 'https://maps.googleapis.com/maps/api/place/photo';
 
-let getPhotoUrl = function (photo, maxWidth, maxHeight) {
-    return PHOTOS_API_URL + '?' + QS.stringify({
-        key: API_KEY,
-        photoreference: photo.photo_reference,
-        maxwidth: maxWidth,
-        maxheight: maxHeight
-    });
+let getPhotoUrl = function (photo) {
+    return '/place_photos/' + photo.photo_reference + '.' + photo.extension;
 };
 
 let fillInfoContainer = function (container, activity, place) {
@@ -146,7 +141,7 @@ let fillInfoContainer = function (container, activity, place) {
         container.querySelector('.info-photo-container').hidden = false;
         let img = container.querySelector('.info-photo');
         let photo = place.photos[getRandomInt(place.photos.length)];
-        img.src = getPhotoUrl(photo, 80, 80);
+        img.src = getPhotoUrl(photo);
     }
     // date
     let humanizedDateRange = humanizeDateRange(activity.range, today);
