@@ -252,12 +252,6 @@ let displayInfo = function (map, activity, place, marker, current) {
     return infoWindow;
 };
 
-let removeChildNodes = function (node) {
-    while (myNode.firstChild) {
-        myNode.removeChild(myNode.firstChild);
-    }
-}
-
 const BLUE_MARKER_ICON = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
 const RED_MARKER_ICON = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
 
