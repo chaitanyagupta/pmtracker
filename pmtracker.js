@@ -53,8 +53,8 @@ let resolveLocale = function () {
 let ISODateString = function (date) {
     let USDateString = date.toLocaleDateString('en-US', {
         year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
         timeZone: DEFAULT_TIMEZONE
     });
     let parts = USDateString.split('/');
