@@ -234,3 +234,27 @@
   - description: Interview with ANI
     source: ANI
     url: https://twitter.com/ANI/status/1080078663377276929
+- date: 2019-01-03
+  location: Phagwara, Punjab
+  events:
+  - description: 106th Indian Science Congress
+    source: "@narendramodi"
+    url: https://twitter.com/narendramodi/status/1080826003381936128
+- date: 2019-01-03
+  location: Gurdaspur, Punjab
+  events:
+  - description: Campaign Rally
+    source: "@narendramodi"
+    url: https://twitter.com/narendramodi/status/1080769555163541504
+- date: 2019-01-04
+  location: Imphal, Manipur
+  events:
+  - description: Inaugurating development projects
+    source: "@narendramodi"
+    url: https://twitter.com/narendramodi/status/1081090229241442306
+- date: 2019-01-04
+  location: Silchar, Assam
+  events:
+  - description: Campaign Rally
+    source: "@narendramodi"
+    url: https://twitter.com/narendramodi/status/1081127114844164096
