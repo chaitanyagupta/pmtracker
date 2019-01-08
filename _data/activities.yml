@@ -258,3 +258,34 @@
   - description: Campaign Rally
     source: "@narendramodi"
     url: https://twitter.com/narendramodi/status/1081127114844164096
+- date: 2019-01-05
+  location: Palamu, Jharkhand
+  events:
+  - description: Public meeting
+    source: "@narendramodi"
+    url: https://twitter.com/narendramodi/status/1081435787206393857
+- date: 2019-01-05
+  location: Baripada, Odisha
+  events:
+  - description: Campaign Rally
+    source: "@narendramodi"
+    url: https://twitter.com/narendramodi/status/1081498562272227328
+- date: 2019-01-07
+  location: New Delhi
+  events:
+  - description: Foreign Minister of Japan calls on PM
+    source: PMO India
+    url: http://www.pmindia.gov.in/en/news_updates/foreign-minister-of-japan-calls-on-pm-2/?comment=disable
+- date: 2019-01-08
+  location: New Delhi
+  events:
+  - description: Talks with PM of Norway
+    source: PMO India
+    url: https://twitter.com/narendramodi/status/1082545842735611904
+- date: 2019-01-09
+  location: Agra, Uttar Pradesh
+  events:
+  - description: Inaugurating various projects
+    source: "@narendramodi"
+    url: https://twitter.com/narendramodi/status/1082638195370602496
+
