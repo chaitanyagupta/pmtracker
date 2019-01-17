@@ -273,6 +273,10 @@ let boundsForCoordinates = function (coordinates) {
 
 let displayActivities = function (context) {
     let activities = selectedActivities();
+    if (activities.length === 0) {
+        console.warn('No activities for the selected date range');
+        return;
+    }
     let lastActivity = activities[activities.length - 1];
     let today = ISODateString(new Date());
     let places = [];
@@ -300,7 +304,9 @@ let displayActivities = function (context) {
     let coordinates = places.map(function (place) {
         return place.geometry.location;
     });
-    context.map.fitBounds(boundsForCoordinates(coordinates), { top: 30, right: 60, bottom: 40, left: 30 });
+    if (coordinates.length > 0) {
+        context.map.fitBounds(boundsForCoordinates(coordinates), { top: 30, right: 60, bottom: 40, left: 30 });
+    }
     if (!activities.some(function (activity) { return activity.range.contains(today); })) {
         document.getElementById('today-warning').hidden = false;
     }

@@ -2,8 +2,11 @@
 
 let fs = require('fs');
 let util = require('util');
+let activityService = require('./activities');
 let placeService = require('./places');
 let yaml = require('node-yaml');
+
+// utils
 
 let removeDuplicates = function (array) {
     let uniques = [];
@@ -14,6 +17,8 @@ let removeDuplicates = function (array) {
     });
     return uniques;
 };
+
+// task queue
 
 function TaskQueue (limit) {
     this.counter = 0;
@@ -54,6 +59,23 @@ TaskQueue.prototype.resume = function () {
         });
     }
 };
+
+// activities
+
+let setActivitiesKey = exports.setActivitiesKey = function (key) {
+    activityService.setKey(key);
+};
+
+let genActivities = exports.genActivities = function (output) {
+    return activityService.getActivities()
+        .then(function (activities) {
+            fs.writeFileSync(output, JSON.stringify(activities, null, 4));
+            console.log('Wrote activities');
+            return activities;
+        });
+};
+
+// places
 
 const QUEUE_LIMIT = 1;
 const PLACE_FIELDS = ['photos', 'name', 'geometry'];
@@ -141,9 +163,14 @@ let writePhotos = exports.writePhotos = function (places, directory) {
     });
 };
 
-let gen = exports.gen = function (input, output, photosDirectory) {
-    let str = fs.readFileSync(input, {encoding: 'utf8'});
-    let activities = yaml.parse(str, {schema: yaml.schema.defaultSafe});
+let genPlaces = exports.genPlaces = function (input, output, photosDirectory) {
+    let activities = null;
+    if (typeof input === 'object') {
+        activities = input;
+    } else {
+        let str = fs.readFileSync(input, {encoding: 'utf8'});
+        activities = yaml.parse(str, {schema: yaml.schema.defaultSafe});
+    }
     let locations = activities.map(function (activity) {
         return activity.location;
     });
@@ -166,6 +193,10 @@ let setPlacesKey = exports.setPlacesKey = function (key) {
 };
 
 if (require.main === module) {
+    setActivitiesKey(process.env['ACTIVITIES_API_KEY']);
     setPlacesKey(process.env['PLACES_API_KEY']);
-    gen('./_data/activities.yml', './_data/places.json', './place_photos/');
+    genActivities('./_data/activities.json')
+        .then(function (activities) {
+            genPlaces(activities, './_data/places.json', './place_photos/');
+        });
 }
