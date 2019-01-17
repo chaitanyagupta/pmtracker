@@ -22,6 +22,10 @@ access to the activity data (you will need to sign up):
 
 https://airtable.com/invite/l?inviteId=invPa5ltpLBUVzPK0&inviteToken=d252e6638fcd200a2bf3324657b235f91f79e055ab9954e98e1a0e1f8dce6f34
 
+(You can also view just the table contents by [visiting this link][activity
+read-only view], but to fetch this data via API you will need to sign up for
+Airtable and visit the invite link)
+
 Once you have read-only access to the PM Tracker workspace, get your Airtable
 API key and set the environment variable `ACTIVITIES_API_KEY`.
 
@@ -60,3 +64,4 @@ bundle exec jekyll build  # production build
 [Airtable]: https://airtable.com
 [Google Places API]: https://developers.google.com/places/web-service/intro
 [Google Cloud Platform]: https://console.cloud.google.com/apis/credentials
+[activity read-only view]: https://airtable.com/shrV5MVKhAOHApLgd
