@@ -94,7 +94,8 @@ let getPlaces = exports.getPlaces = function (locations) {
                         if (data.status === 'OK') {
                             result[location] = data.candidates[0];
                         } else {
-                            throw new Error("Couldn't resolve place for location: " + location + " status: " + data.status);
+                            reject(new Error("Couldn't resolve place for location: " + location + " status: " + data.status));
+                            return;
                         }
                     })
                     .finally(function () {
@@ -143,11 +144,11 @@ let writePhotos = exports.writePhotos = function (places, directory) {
                                     fs.writeFileSync(photoPath(extension), response.data);
                                     photo.extension = extension;
                                 } else {
-                                    throw new Error('Unknown image type: ' + type);
+                                    reject(new Error('Unknown image type: ' + type));
                                 }
                             })
                             .catch(function (error) {
-                                console.warn('Error writing photo: ' + error);
+                                reject(new Error('Error writing photo: ' + error));
                             })
                             .finally(function () {
                                 tq.remove(taskId);
@@ -174,7 +175,7 @@ let genPlaces = exports.genPlaces = function (input, output, photosDirectory) {
     let locations = activities.map(function (activity) {
         return activity.location;
     });
-    getPlaces(locations).then(function (placeDictionary) {
+    return getPlaces(locations).then(function (placeDictionary) {
         console.log('Fetched all places');
         return placeDictionary
     }).then(function (placeDictionary) {
@@ -182,7 +183,7 @@ let genPlaces = exports.genPlaces = function (input, output, photosDirectory) {
         if (!fs.existsSync(photosDirectory)) {
             fs.mkdirSync(photosDirectory);
         }
-        writePhotos(places, photosDirectory)
+        return writePhotos(places, photosDirectory)
             .then(function (status) {
                 console.log('Wrote all photos');
                 fs.writeFileSync(output, JSON.stringify(placeDictionary, null, 4));
@@ -200,6 +201,10 @@ if (require.main === module) {
     setPlacesKey(process.env['PLACES_API_KEY']);
     genActivities('./_data/activities.json')
         .then(function (activities) {
-            genPlaces(activities, './_data/places.json', './place_photos/');
+            return genPlaces(activities, './_data/places.json', './place_photos/');
+        })
+        .catch(function (err) {
+            console.error(err);
+            process.exit(1);
         });
 }
