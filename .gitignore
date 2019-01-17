@@ -1,3 +1,6 @@
 /_site
 .DS_Store
 node_modules
+/_data/activities.json
+/_data/places.json
+/place_photos
