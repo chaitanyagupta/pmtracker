@@ -5,8 +5,8 @@ recent times. It is available at https://pmtracker.in
 
 ## Building
 
-PM Tracker is a static website created using [Jekyll][]. Before running `jekyll
-build` though, we need to fetch the activity data from [Airtable], and generate
+PM Tracker is a static website created using [Jekyll][]. Before running Jekyll
+though, we need to fetch the activity data from [Airtable][], and generate
 metadata for places (lat-long, photo, etc.) from [Google Places API][].
 
 This requires node.js v10 or later.
@@ -39,7 +39,7 @@ export PLACES_API_KEY=<Places API key>
 After this, you are ready to run the data generation script which will
 
 1. Fetch the activity data from Airtable
-2. Fetch the place data vi Google Places API
+2. Fetch the place data via Google Places API
 3. Fetch place photos via Google Places API
 
 ```sh
