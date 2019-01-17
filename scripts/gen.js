@@ -179,6 +179,9 @@ let genPlaces = exports.genPlaces = function (input, output, photosDirectory) {
         return placeDictionary
     }).then(function (placeDictionary) {
         let places = Object.values(placeDictionary);
+        if (!fs.existsSync(photosDirectory)) {
+            fs.mkdirSync(photosDirectory);
+        }
         writePhotos(places, photosDirectory)
             .then(function (status) {
                 console.log('Wrote all photos');
